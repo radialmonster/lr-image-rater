@@ -19,7 +19,7 @@ The **LR Image Rater Plugin** for Adobe Lightroom Classic helps you rate your im
    - Open Lightroom Classic.
    - Go to `File > Plug-in Manager`.
    - Click `Add` and navigate to the folder containing the `lr-image-rater.lrplugin` directory.
-   - Select the folder and click `Add Plug-in`.
+   - Select the folder `lr-image-rater.lrplugin` and click `Add Plug-in`.
 
 3. **Verify Installation**  
    The plugin should now appear in the Plug-in Manager. Ensure it is enabled.
