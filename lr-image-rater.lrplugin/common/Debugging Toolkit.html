@@ -1,0 +1,2879 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns:mv="http://macVmlSchemaUri" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta name=Title content="Debugging Toolkit for Lightroom 3 SDK">
+<meta name=Keywords content="">
+<meta http-equiv=Content-Type content="text/html; charset=macintosh">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 15">
+<meta name=Originator content="Microsoft Word 15">
+<link rel=File-List href="Debugging%20Toolkit.fld/filelist.xml">
+<title>Debugging Toolkit for Lightroom 3 SDK</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Ellis</o:Author>
+  <o:LastAuthor>John Ellis</o:LastAuthor>
+  <o:Revision>2</o:Revision>
+  <o:TotalTime>463</o:TotalTime>
+  <o:Created>2017-10-17T00:55:00Z</o:Created>
+  <o:LastSaved>2017-10-17T00:55:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>2250</o:Words>
+  <o:Characters>12828</o:Characters>
+  <o:Lines>106</o:Lines>
+  <o:Paragraphs>30</o:Paragraphs>
+  <o:CharactersWithSpaces>15048</o:CharactersWithSpaces>
+  <o:Version>15.0</o:Version>
+ </o:DocumentProperties>
+ <o:OfficeDocumentSettings>
+  <o:RelyOnVML/>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]-->
+<link rel=themeData href="Debugging%20Toolkit.fld/themedata.thmx">
+<!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>140</w:Zoom>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="6" NLCheck="1">0</w:ActiveWritingStyle>
+  <w:ActiveWritingStyle Lang="EN-US" VendorID="64" DLLVersion="0" NLCheck="1">0</w:ActiveWritingStyle>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:TrackMoves>false</w:TrackMoves>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseWord2010TableStyleRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false"
+  DefSemiHidden="false" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="382">
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 9"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="header"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footer"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index heading"/>
+  <w:LsdException Locked="false" Priority="35" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of figures"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="envelope address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="envelope return"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="line number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="page number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of authorities"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="macro"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="toa heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 5"/>
+  <w:LsdException Locked="false" Priority="10" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Closing"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Signature"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Message Header"/>
+  <w:LsdException Locked="false" Priority="11" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Salutation"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Date"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text First Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text First Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Block Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Hyperlink"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="FollowedHyperlink"/>
+  <w:LsdException Locked="false" Priority="22" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Document Map"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Plain Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="E-mail Signature"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Top of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Bottom of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal (Web)"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Acronym"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Cite"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Code"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Definition"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Keyboard"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Preformatted"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Sample"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Typewriter"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Variable"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal Table"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation subject"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="No List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Contemporary"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Elegant"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Professional"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Subtle 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Subtle 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Balloon Text"/>
+  <w:LsdException Locked="false" Priority="59" Name="Table Grid"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Theme"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Level 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" QFormat="true"
+   Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" QFormat="true"
+   Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" QFormat="true"
+   Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" QFormat="true"
+   Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" QFormat="true"
+   Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" QFormat="true"
+   Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="TOC Heading"/>
+  <w:LsdException Locked="false" Priority="41" Name="Plain Table 1"/>
+  <w:LsdException Locked="false" Priority="42" Name="Plain Table 2"/>
+  <w:LsdException Locked="false" Priority="43" Name="Plain Table 3"/>
+  <w:LsdException Locked="false" Priority="44" Name="Plain Table 4"/>
+  <w:LsdException Locked="false" Priority="45" Name="Plain Table 5"/>
+  <w:LsdException Locked="false" Priority="40" Name="Grid Table Light"/>
+  <w:LsdException Locked="false" Priority="46" Name="Grid Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="Grid Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="Grid Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="46" Name="List Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="List Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="List Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Mention"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Smart Hyperlink"/>
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+@font-face
+	{font-family:Arial;
+	panose-1:2 11 6 4 2 2 2 2 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536859905 -1073711037 9 0 511 0;}
+@font-face
+	{font-family:"Courier New";
+	panose-1:2 7 3 9 2 2 5 2 4 4;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536859905 -1073711037 9 0 511 0;}
+@font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;
+	mso-font-charset:1;
+	mso-generic-font-family:roman;
+	mso-font-format:other;
+	mso-font-pitch:variable;
+	mso-font-signature:0 0 0 0 0 0;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1073786111 1 0 415 0;}
+@font-face
+	{font-family:"MS Mincho";
+	panose-1:2 2 6 9 4 2 5 8 3 4;
+	mso-font-charset:128;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:-536870145 1791491579 134217746 0 131231 0;}
+ /* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+h1
+	{mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 1 Char";
+	mso-style-next:Normal;
+	margin-top:24.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-font-kerning:0pt;}
+h2
+	{mso-style-priority:9;
+	mso-style-qformat:yes;
+	mso-style-link:"Heading 2 Char";
+	mso-style-next:Normal;
+	margin-top:14.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:0in;
+	margin-bottom:.0001pt;
+	line-height:115%;
+	mso-pagination:widow-orphan lines-together;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	font-weight:normal;
+	mso-bidi-font-weight:bold;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	mso-themecolor:hyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	color:purple;
+	mso-themecolor:followedhyperlink;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoDocumentMap, li.MsoDocumentMap, div.MsoDocumentMap
+	{mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-link:"Document Map Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;}
+p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpFirst, li.MsoListParagraphCxSpFirst, div.MsoListParagraphCxSpFirst
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpMiddle, li.MsoListParagraphCxSpMiddle, div.MsoListParagraphCxSpMiddle
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+p.MsoListParagraphCxSpLast, li.MsoListParagraphCxSpLast, div.MsoListParagraphCxSpLast
+	{mso-style-priority:34;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-style-type:export-only;
+	margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	mso-add-space:auto;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+span.Code
+	{mso-style-name:Code;
+	mso-style-priority:1;
+	mso-style-unhide:no;
+	mso-style-qformat:yes;
+	mso-ansi-font-size:11.0pt;
+	mso-bidi-font-size:11.0pt;
+	font-family:"Courier New";
+	mso-ascii-font-family:"Courier New";
+	mso-hansi-font-family:"Courier New";
+	mso-bidi-font-family:"Courier New";}
+span.Heading1Char
+	{mso-style-name:"Heading 1 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 1";
+	mso-ansi-font-size:16.0pt;
+	mso-bidi-font-size:14.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	font-weight:bold;}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-priority:9;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Heading 2";
+	mso-ansi-font-size:14.0pt;
+	mso-bidi-font-size:13.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:"Times New Roman";
+	mso-fareast-theme-font:major-fareast;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:major-bidi;
+	mso-bidi-font-weight:bold;}
+span.DocumentMapChar
+	{mso-style-name:"Document Map Char";
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-unhide:no;
+	mso-style-locked:yes;
+	mso-style-link:"Document Map";
+	font-family:"Times New Roman";
+	mso-ascii-font-family:"Times New Roman";
+	mso-hansi-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	mso-default-props:yes;
+	font-family:Calibri;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-bidi-theme-font:minor-bidi;}
+.MsoPapDefault
+	{mso-style-type:export-only;
+	line-height:115%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.WordSection1
+	{page:WordSection1;}
+ /* List Definitions */
+@list l0
+	{mso-list-id:38210519;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-456631610 -1735612340 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l0:level1
+	{mso-level-start-at:8;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l0:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l0:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1
+	{mso-list-id:309989938;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1513269532 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l1:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l1:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l1:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2
+	{mso-list-id:390233756;
+	mso-list-type:hybrid;
+	mso-list-template-ids:235835206 -369835690 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-start-at:5;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l2:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3
+	{mso-list-id:484012662;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1348554772 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l3:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4
+	{mso-list-id:575361700;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-2078792702 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l4:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5
+	{mso-list-id:684402008;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-972511384 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l5:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l5:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6
+	{mso-list-id:739014426;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1833199322 -1706238444 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l6:level1
+	{mso-level-start-at:9;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l6:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l6:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7
+	{mso-list-id:763569674;
+	mso-list-type:hybrid;
+	mso-list-template-ids:140022512 -369835690 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l7:level1
+	{mso-level-start-at:5;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l7:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l7:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l8
+	{mso-list-id:791704330;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1786476878 -817183434 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+@list l8:level1
+	{mso-level-start-at:0;
+	mso-level-number-format:bullet;
+	mso-level-text:-;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:Calibri;
+	mso-fareast-theme-font:minor-latin;}
+@list l8:level2
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l8:level3
+	{mso-level-number-format:bullet;
+	mso-level-text:_;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l8:level4
+	{mso-level-number-format:bullet;
+	mso-level-text:_;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l8:level5
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l8:level6
+	{mso-level-number-format:bullet;
+	mso-level-text:_;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l8:level7
+	{mso-level-number-format:bullet;
+	mso-level-text:_;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l8:level8
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:"Courier New";}
+@list l8:level9
+	{mso-level-number-format:bullet;
+	mso-level-text:_;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;
+	font-family:Wingdings;}
+@list l9
+	{mso-list-id:880631297;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-1608730148 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l9:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l9:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l9:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l9:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l10
+	{mso-list-id:950169573;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1272451292 -369835690 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l10:level1
+	{mso-level-start-at:5;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l10:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l10:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l10:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l11
+	{mso-list-id:990252807;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1995229454 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l11:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l11:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l11:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l11:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l12
+	{mso-list-id:1525053091;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1246533472 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l12:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l12:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l12:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l12:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l13
+	{mso-list-id:1560550404;
+	mso-list-type:hybrid;
+	mso-list-template-ids:342531774 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l13:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l13:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l13:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l13:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l14
+	{mso-list-id:1935044183;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-931878794 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l14:level1
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l14:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l14:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l14:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l15
+	{mso-list-id:2119636856;
+	mso-list-type:hybrid;
+	mso-list-template-ids:441894240 -1735612340 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l15:level1
+	{mso-level-start-at:8;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level2
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level3
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l15:level4
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level5
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level6
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+@list l15:level7
+	{mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level8
+	{mso-level-number-format:alpha-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l15:level9
+	{mso-level-number-format:roman-lower;
+	mso-level-tab-stop:none;
+	mso-level-number-position:right;
+	text-indent:-9.0pt;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:Calibri;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="1026"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=WordSection1>
+
+<h1>A Debugging Toolkit for <span class=SpellE>Lightroom</span> 5–6 SDK</h1>
+
+<p class=MsoNormal><span style='font-size:10.0pt;line-height:115%;mso-bidi-font-family:
+"Times New Roman"'>Version 1.2<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;line-height:115%;mso-bidi-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:10.0pt;line-height:115%;mso-bidi-font-family:
+"Times New Roman"'>Copyright 2010-2017, John R. Ellis. You may use this toolkit
+for any purpose, <span class=GramE>as long as</span> you include this notice in
+any versions derived in whole or part from these files.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>This Debugging
+Toolkit consists of:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l8 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#_Using_strict.lua"><span class=SpellE><span
+style='font-size:11.0pt;line-height:115%;font-family:"Courier New"'>strict.lua</span></span></a><span
+style='mso-bidi-font-family:"Times New Roman"'>: The standard script from the <span
+class=SpellE>Lua</span> distribution that detects undeclared global variables
+(usually typos).<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l8 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#_Using_Require.lua"><span
+class=SpellE><span style='font-size:11.0pt;line-height:115%;font-family:"Courier New"'>Require.lua</span></span></a><span
+style='mso-bidi-font-family:"Times New Roman"'>: A replacement for the standard
+</span><span class=Code><span style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> that provides the ability to
+reload all files and to define a search path for <span class=GramE>loading <span
+class=Code><span style='font-size:11.0pt;line-height:115%'>.<span class=SpellE>lua</span></span></span></span>
+files from shared directories.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l8 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#_Using_the_Debug"><span class=SpellE><span
+class=GramE><span style='font-size:11.0pt;line-height:115%;font-family:"Courier New"'>debuggingtoolkit.lrdevplugin</span></span></span></a><span
+style='mso-bidi-font-family:"Times New Roman"'>: Provides quick, easy loading
+and reloading of scripts (whether or not they're part of a plugin) and
+executing them with the debugger.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l8 level1 lfo1'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>-<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><a href="#_Using_the_Debug.lua"><span
+class=SpellE><span style='font-size:11.0pt;line-height:115%;font-family:"Courier New"'>Debug.lua</span></span></a>:
+A standalone debugging module that provides an interactive debugger with stack
+traces, breakpoints, stepping, and evaluation of expressions; a &quot;pretty
+printer&quot; that nicely formats any <span class=SpellE>Lua</span> value
+(including nested and circular tables); some logging tools; and a rudimentary
+elapsed-time profiler for functions.</p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoNormal>You should expect to take about an hour to prepare your
+plugin for debugging and get up to speed on how to use the debugger. But this
+investment will quickly pay off—trying to debug plugins with print statements
+is an exercise in total frustration, given how mysterious <span class=SpellE>Lua</span>
+errors can be and <span class=SpellE>Lightroom's</span> often silent treatment
+of errors.<span class=Code><span style='font-size:11.0pt;line-height:115%'><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><a href="#_Getting_Started"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276469957 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Getting Started<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400360039003900350037000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><!--[if supportFields]><span
+class=MsoHyperlink><span style='mso-element:field-begin'></span> REF
+_Ref276469963 \h <span style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT </span><![endif]--><span
+class=MsoHyperlink><!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400360039003900360033000000</w:data>
+</xml><![endif]--></span><!--[if supportFields]><span class=MsoHyperlink><span
+style='mso-element:field-end'></span></span><![endif]--><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal><a href="#_Using_strict.lua"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276469998 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Using strict.lua<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400360039003900390038000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal><a href="#_Using_the_Debug"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470003 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Using the Debug Script Plugin<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000300033000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal><a href="#_Using_Require.lua"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470007 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Using Require.lua<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000300037000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal><a href="#_Using_the_Debug.lua">Using the <span
+class=SpellE>Debug.lua</span> Debugger</a><span class=MsoHyperlink> <o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_Preparing_Your_Code"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470027 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Preparing Your Code<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000320037000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_Examining_the_Call"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470053 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Examining the Call Stack<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000350033000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a
+href="#_Evaluating_Expressions_and"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470058 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Evaluating Expressions and Statements<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000350038000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_Resuming_Execution"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470062 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Resuming Execution<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000360032000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_Setting_Breakpoints"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470068 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Setting Breakpoints<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000360038000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_The_Log"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470073 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->The Log<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000370033000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><a href="#_Setting_the_Source"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470080 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Setting the Source Path<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000380030000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<p class=MsoNormal><a href="#_Other_Debug_facilities"><!--[if supportFields]><span
+style='mso-element:field-begin'></span><span
+style='mso-spacerun:yes'>&nbsp;</span>REF _Ref276470083 \h <span
+style='mso-spacerun:yes'>&nbsp;</span>\* MERGEFORMAT <span style='mso-element:
+field-separator'></span><![endif]-->Other Debug facilities<!--[if gte mso 9]><xml>
+ <w:data>08D0C9EA79F9BACE118C8200AA004BA90B02000000080000000E0000005F005200650066003200370036003400370030003000380033000000</w:data>
+</xml><![endif]--><!--[if supportFields]><span style='mso-element:field-end'></span><![endif]--></a><span
+class=MsoHyperlink><o:p></o:p></span></p>
+
+<h1><a name="_Ref276469957"></a><a name="_Getting_Started"></a><a
+name="_Getting_Started_1"></a><span style='mso-bookmark:_Ref276469957'>Getting
+Started</span></h1>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><a name="_Debugging_Menu_Plugins"></a><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Unzip
+the toolkit and place </span><span class=SpellE><span class=GramE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>debuggingtoolkit.lrdevplugin</span></span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> </span></span><span
+style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;</span>in your plugins folder.<o:p></o:p></span></p>
+
+<p class=MsoNormal style='tab-stops:126.75pt'><span style='mso-bidi-font-family:
+"Times New Roman"'><span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Use
+the <span class=SpellE>Lightroom</span> Plug-in Manager to add </span><span
+class=SpellE><span class=GramE><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>debuggingtoolkit.lrdevplugin</span></span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> as a plugin.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Copy
+</span><span class=SpellE><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>Require.lua</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> from the </span><span class=SpellE><span class=GramE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>debuggingtoolkit.lrdevplugin</span></span></span></span>
+<span style='mso-spacerun:yes'>&nbsp;</span><span style='mso-bidi-font-family:
+"Times New Roman"'>directory to the directory of the plugin you want to
+debug.<span style='mso-spacerun:yes'>&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>4.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Place
+these lines at the top of each of your <span class=GramE>plugin's .<span
+class=SpellE>lua</span></span> files, including service definition scripts but
+not </span><span class=SpellE><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>Info.lua</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> or scripts defining <span class=SpellE>tagsets</span> and
+metadata:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local Require = <span class=SpellE>require</span>
+&quot;<span class=SpellE>Require<span class=GramE>&quot;.path</span></span>
+(&quot;../<span class=SpellE>debuggingtoolkit.lrdevplugin</span>&quot;).reload ()<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local Debug = require &quot;Debug<span
+class=GramE>&quot;.<span class=SpellE>init</span></span> ()<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require &quot;strict&quot;<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.25in'><span style='mso-bidi-font-family:
+"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.25in'><span style='mso-bidi-font-family:
+"Times New Roman"'>When your plugin executes from a directory ending <span
+class=GramE>in <span class=Code><span style='font-size:11.0pt;line-height:115%'>.<span
+class=SpellE>lrdevplugin</span></span></span></span>, the debugger will be
+enabled; when it executes from any other directory (e.g. a release directory
+ending in </span><span class=Code><span style='font-size:11.0pt;line-height:
+115%'>.<span class=SpellE>lrplugin</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'>) it will be disabled and have no impact on execution.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>5.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Wrap
+<i style='mso-bidi-font-style:normal'>all</i> functions passed to the SDK API and
+your main </span><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>showDialog</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> function with </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>Debug.showErrors</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>. For example:<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.25in;mso-add-space:auto'><span
+style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
+class=GramE><span class=Code><span style='font-size:11.0pt;line-height:115%'>viewFactory:edit</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>_field</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> {validate = <span
+class=SpellE>Debug.showErrors</span> (<span class=SpellE>myValidate</span>)}<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>LrTask.startAsyncTask</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (<span
+class=SpellE>Debug.showErrors</span> (function () </span></span>...<span
+class=Code><span style='font-size:11.0pt;line-height:115%'>))<o:p></o:p></span></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;mso-add-space:auto'><span
+style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;mso-add-space:
+auto'><span style='mso-bidi-font-family:"Times New Roman"'>This will cause any
+errors within the functions to be trapped and invoke the debugger. Failing to
+do this will often cause the errors to be silently ignored by <span
+class=SpellE>Lightroom</span>, with no indication anything has gone wrong. Be
+sure to wrap callbacks passed to <span class=SpellE>LrView</span> controls,
+main functions of tasks, functions return by export and publish-service
+definition <span class=SpellE>scriptions</span>, and any other functions passed
+to the SDK API.<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;mso-add-space:
+auto'><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>6.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Wrap
+the main function of your <b style='mso-bidi-font-weight:normal'>File</b> or <b
+style='mso-bidi-font-weight:normal'>Library</b> menu plugin (often called </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>showDialog</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>) with </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.showErrors</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>.<span
+style='mso-spacerun:yes'>&nbsp; </span>For example:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.callWithContext</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (&quot;<span
+class=SpellE>showDialog</span>&quot;, <o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span class=SpellE>Debug.showErrors</span>
+(function (context)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span
+class=SpellE>showDialog</span> (context)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>end))<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><o:p>&nbsp;</o:p></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>7.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Replace
+uses of the <span class=SpellE>Lua</span> </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>pcall</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> and </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>LrTasks.pcall</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> with </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pcall</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>. Replace uses of </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>LrFunctionContext.callWithContext</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> with </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.callWithContext</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>. This allows the debugger to
+trace the call stack across calls to these functions and enables breaks and
+stepping within the calls.<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;mso-add-space:
+auto'><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>8.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Place
+a call to </span><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>Debug.pauseIfAsked</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>()</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> as the first line of the </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>showDialog</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> function (for menu plugins) or
+the </span><span class=SpellE><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>startDialog</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> function (for export and publish-service plugins).<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>9.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Add
+the dummy file </span><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>_debug.txt</span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> to your plugin directory (you can copy it from </span><span
+class=SpellE><span class=GramE><span class=Code><span style='font-size:11.0pt;
+line-height:115%'>debuggingtoolkit.lrdevplugin</span></span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> or make an empty file with a
+text editor)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>10.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-family:"Times New Roman"'>Run your plugin. The debugger
+will open a window when it reaches the call to </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pauseIfAsked</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>()</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>, letting you set breakpoints
+before resuming execution.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l1 level1 lfo3'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>11.<span style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></span><![endif]><span
+style='mso-bidi-font-family:"Times New Roman"'>When you're done debugging,
+rename </span><span class=Code><span style='font-size:11.0pt;line-height:115%'>_debug.txt</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> to </span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>__debug.txt</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> so the debugger won't be
+invoked (unless the plugin encounters an error). Whenever you want the debugger
+to be invoked at plugin startup to set breakpoints, rename the file back.<o:p></o:p></span></p>
+
+<h1><a name="_Ref276469998"></a><a name="_Debugging_Export-_and"></a><a
+name="_Using_strict.lua"></a><span style='mso-bookmark:_Ref276469998'>Using </span><span
+style='mso-bookmark:_Ref276469998'><span class=SpellE><span class=Code><span
+style='mso-ansi-font-size:16.0pt;mso-bidi-font-size:16.0pt;line-height:115%'>strict.lua</span></span></span></span></h1>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Perhaps
+the most common <span class=SpellE>Lua</span> programming mistake is to mistype
+the name of variable—<span class=SpellE>Lua</span> will silently assume the
+mistyped name is a global variable.<span style='mso-spacerun:yes'>&nbsp;
+</span>If you include the following at the top of each file:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require &quot;<span class=SpellE>strict.lua</span>&quot;<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>any
+attempt to access a global variable that hasn't been &quot;declared&quot; will raise
+an error.<span style='mso-spacerun:yes'>&nbsp; </span>You &quot;declare&quot; a
+global variable simply by assigning it a value (or defining it as a function)
+at the top level of a file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Of
+everything in this toolkit, </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>strict.lua</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> has the biggest bang for the
+buck. Use it.<o:p></o:p></span></p>
+
+<h1><a name="_Ref276470003"></a><a name="_Using_the_Debug"></a><span
+style='mso-bookmark:_Ref276470003'>Using the Debug Script </span>Command</h1>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>The
+Debug Script plugin provides quick, easy loading and reloading of scripts (<span
+class=GramE>whether or not</span> they're part of a plugin) and executing them
+with the debugger. You can use Debug Script to run code without using the
+Plug-in Manager or creating a separate plugin directory and </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Info.lua</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>To use
+the Debug Script command:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l9 level1 lfo11'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>File &gt; Plug-in Extras &gt;
+Debug Script</span></b><span style='mso-bidi-font-family:"Times New Roman"'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l9 level1 lfo11'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Browse
+to <span class=GramE>the <span class=Code><span style='font-size:11.0pt;
+line-height:115%'>.<span class=SpellE>lua</span></span></span></span> file you
+want to run. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraph style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l9 level1 lfo11'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>3.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Each
+time you click <b style='mso-bidi-font-weight:normal'>Run</b>, Debug Script
+will reload the file <i style='mso-bidi-font-style:normal'>and </i>any files
+loaded by nested </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>’s</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>, executing the files in a new global
+environment.<span style='mso-spacerun:yes'>&nbsp; </span>If an error occurs,
+the source file will be displayed in the configured text editor at the
+appropriate line.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Click <b
+style='mso-bidi-font-weight:normal'>Debug options</b> to configure the text
+editor you want to use with Debug Script.<span style='mso-spacerun:yes'>&nbsp;
+</span>On Windows, by default it will use <span class=SpellE>TextPad</span> if
+it's installed, Notepad otherwise.<span style='mso-spacerun:yes'>&nbsp;
+</span>On Mac, by default it will use <span class=SpellE>TextEdit</span>. (Neither
+Notepad nor <span class=SpellE>TextEdit</span> know how to display a source file
+at a <span class=GramE>particular line</span> number.)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>The <b
+style='mso-bidi-font-weight:normal'>Show new <span class=SpellE>globals</span> </b>option
+shows global variables that were defined <span class=GramE>as a result of</span>
+loading the file.<span style='mso-spacerun:yes'>&nbsp; </span>If your
+programming style avoids global variables, this helps you enforce that
+convention.<span style='mso-spacerun:yes'>&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>The <b
+style='mso-bidi-font-weight:normal'>Reload all required scripts</b> option
+forces the reloading of all nested </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>’d</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> files.<span
+style='mso-spacerun:yes'>&nbsp; </span>The only reason to uncheck this is to
+test out persistent state that may be maintained by some of the modules loaded
+by the main file.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>The <b
+style='mso-bidi-font-weight:normal'>Clear <span class=SpellE>LrPrefs.prefsForPlugin</span></b>
+option deletes any preferences before executing the script.<o:p></o:p></span></p>
+
+<h1><a name="_Ref276470007"></a><a name="_Using_Require.lua"></a><span
+style='mso-bookmark:_Ref276470007'>Using </span><span style='mso-bookmark:_Ref276470007'><span
+class=SpellE><span class=Code><span style='mso-ansi-font-size:16.0pt;
+mso-bidi-font-size:16.0pt;line-height:115%'>Require.lua</span></span></span></span></h1>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>Require.lua</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> provides a compatible
+replacement for the standard </span><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>require</span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> that provides the ability to for loading shared files from
+common directories and to automatically reload all files each time your plugin
+executes during development (but not when released).<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>First,
+place a copy of </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>Require.lua</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> in your plugin directory.<span
+style='mso-spacerun:yes'>&nbsp; </span>To load files from a shared directory </span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>common</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> that's a sibling of your plugin
+directory, put the following at the top of your plugin's main file:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local Require = <span class=SpellE>require</span>
+&quot;<span class=SpellE>Require<span class=GramE>&quot;.path</span></span>
+(&quot;../common&quot;)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Now </span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> will look in the </span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>common</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> directory for any files that aren't
+found in the plugin directory. You can provide more than one directory in the
+call to </span><span class=Code><span style='font-size:11.0pt;line-height:115%'>path</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>To deploy
+your plugin to customers, you could continue to use the same directory
+structure.<span style='mso-spacerun:yes'>&nbsp; </span>However, I recommend
+compiling all the plugin-specific and common files into a single release
+directory that gets shipped to your customers.<span
+style='mso-spacerun:yes'>&nbsp; </span>That simplifies the installation for
+them by not having to create the </span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>common</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> directory.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>And if you have two plugins
+sharing a common file, each gets its own copy (and version) of the file,
+letting a customer upgrade one plugin without upgrading the other.<span
+style='mso-spacerun:yes'>&nbsp; </span>(Since each plugin executes in its own
+environment, each will compile and load its own copy of a shared file,
+regardless of whether it is loaded from a common directory.)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>To
+force reloading of </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>’d</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> files each time you run the
+plugin without invoking the Plug-in Manager, use <span class=GramE>the <span
+class=Code><span style='font-size:11.0pt;line-height:115%'>.reload</span></span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>()</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> option:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local Require = <span class=SpellE>require</span>
+&quot;<span class=SpellE>Require<span class=GramE>&quot;.path</span></span>
+(&quot;../common&quot;).reload()<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Whenever
+the main file is executed from a directory ending <span class=GramE>in <span
+class=Code><span style='font-size:11.0pt;line-height:115%'>.<span class=SpellE>lrdevplugin</span></span></span></span>,
+any subsequent nested </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>require</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>’s</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> will be reloaded, regardless if
+they had been previously loaded.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span class=GramE>The <span
+class=Code><span style='font-size:11.0pt;line-height:115%'>.reload</span></span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>()</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> option has no effect when
+executed from a directory ending in </span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>.<span class=SpellE>lrplugin</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> (a release directory) – your
+released plugin will load files just once, when it is first invoked.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>For
+export and publish-service plugins, you'll have to do a little extra in the
+service-definition script in addition to using <span class=GramE>the <span
+class=Code><span style='font-size:11.0pt;line-height:115%'>.reload</span></span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>()</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> option. Where formerly it might
+have contained:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local <span class=SpellE>ExportDialogSections</span>
+= require &quot;<span class=SpellE>ExportDialogSections</span>&quot;<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>return {<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>…<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span class=SpellE>startDialog</span>
+= <span class=SpellE>ExportDialogSections.startDialog</span><o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>change
+it to be:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>local <span class=SpellE>ExportDialogSections</span>
+= require &quot;<span class=SpellE>ExportDialogSections</span>&quot;<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>return {<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span>…<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><span class=SpellE>startDialog</span>
+= <span class=SpellE>Debug.showErrors</span> (function (...)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>require &quot;<span class=SpellE>ExportDialogSections</span><span
+class=GramE>&quot;.<span class=SpellE>startDialog</span></span> (...)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>end),<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>This
+will force </span><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>ExportDialogSections</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> to be reloaded each time the
+export or publish is executed (but not when the plugin is deployed in <span
+class=GramE>a <span class=Code><span style='font-size:11.0pt;line-height:115%'>.<span
+class=SpellE>lrplugin</span></span></span></span> folder).<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Unfortunately,
+you can't use the Plug-in Manager's option <b style='mso-bidi-font-weight:normal'>Reload
+plug-in on each export</b>—it will trigger a <span class=SpellE>Lightroom</span>
+bug, and you'll see the error &quot;attempt to yield across <span class=SpellE>metamethod</span>/C-call
+boundary&quot; in the Plug-in Manager.<span style='mso-spacerun:yes'>&nbsp;
+</span></span><a name="_Ref276470012"></a></p>
+
+<h1><span style='mso-bookmark:_Ref276470012'><a name="_Using_the_Debug.lua"></a>Using
+the </span><span style='mso-bookmark:_Ref276470012'><span class=SpellE><span
+class=Code><span style='mso-ansi-font-size:16.0pt;mso-bidi-font-size:16.0pt;
+line-height:115%'>Debug.lua</span></span></span></span><span style='mso-bookmark:
+_Ref276470012'><span class=Code><span style='font-size:14.0pt;line-height:115%;
+font-weight:normal;mso-bidi-font-weight:bold'> </span></span>Debugger</span></h1>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>Debug.lua</span></span></span><span style='mso-bidi-font-family:
+"Times New Roman"'> provides a simple interactive debugger with error trapping,
+breakpoints, stepping, stack traces, and evaluation of variable and expressions.<span
+style='mso-spacerun:yes'>&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Make
+sure you've prepared your code as described in </span><a
+href="#_Getting_Started_1"><span style='mso-bidi-font-family:"Times New Roman"'>Getting
+Started</span></a><span style='mso-bidi-font-family:"Times New Roman"'>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><a name="_Preparing_Your_Code"></a><a
+name="_Preparing_Your_Code_1"></a><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Once
+you’ve prepared your code, the debugger window will appear whenever a runtime
+error occurs, when </span><span class=SpellE><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>Debug.pauseIfAsked</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>, </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pause</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>,</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> or </span><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pauseIf</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> is called, or the plugin hits a
+breakpoint.<o:p></o:p></span></p>
+
+<h2><a name="_Ref276470053"></a><a name="_Examining_the_Call"></a><span
+style='mso-bookmark:_Ref276470053'>Examining the Call Stack</span></h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>The scrollable
+call stack at the top of the debugger window shows all the <span class=SpellE>Lua</span>
+calls on the call stack. Clicking on a call will open the corresponding source
+file in the configured text editor. It will also show all the in-scope
+variables in the scrollable pane below.<span style='mso-spacerun:yes'>&nbsp;
+</span>Clicking on a variable will pop up a scrollable window showing the
+variable's value, pretty-printed and <span class=SpellE>unelided</span>.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Note
+that by the time the debugger traps an error, the call stack has been truncated
+back to the point where the error is trapped (typically a call to </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.showErrors</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>). Though <span class=SpellE>Lua</span>
+provides a way of trapping the error at the point where it occurs (<span
+class=SpellE>xpcall</span>), that is not available in <span class=SpellE>Lightroom</span>
+(at least as far as I can determine).<o:p></o:p></span></p>
+
+<h2><a name="_Ref276470058"></a><a name="_Evaluating_Expressions_and"></a><span
+style='mso-bookmark:_Ref276470058'>Evaluating Expressions and Statements</span></h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>You can
+enter an expression and click <span class=SpellE><b style='mso-bidi-font-weight:
+normal'>Eval</b></span>, and the result will be pretty-printed in the results
+pane.<span style='mso-spacerun:yes'>&nbsp;&nbsp; </span>The expression will be evaluated
+in the context of the currently selected call on the stack, with access to all
+the variables shown for the call. The expression is always evaluated in an
+asynchronous task (essential for some API calls). <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>To see
+the entire result value in a scrollable pop-up window, click <b
+style='mso-bidi-font-weight:normal'>View Result</b>. <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Click
+the </span><span style='font-family:"MS Mincho";mso-bidi-font-family:"MS Mincho"'>_
+and _</span><span style='mso-bidi-font-family:"Times New Roman"'> buttons to
+call up previously executed expressions.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Checking
+<b style='mso-bidi-font-weight:normal'>Evaluate automatically</b> will evaluate
+the expression each time the debugger window opens. (Separate multiple
+expressions with commas.)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Note
+that you can always re-import a <span class=SpellE>Lightroom</span> namespace
+to access it in an expression, e.g.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>import &quot;<span class=SpellE>LrApplication</span><span
+class=GramE>&quot;.<span class=SpellE>activeCatalog</span></span> ():<span
+class=SpellE>getPath</span> ()<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>To
+execute a statement rather than evaluate an expression, prefix it with a
+period:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>.x [<span class=SpellE>i</span>] = <span
+class=SpellE>myFunc</span>(j)<o:p></o:p></span></span></p>
+
+<h2><a name="_Ref276470062"></a><a name="_Resuming_Execution"></a><span
+style='mso-bookmark:_Ref276470062'>Resuming Execution</span> </h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>Go</span></b><span
+style='mso-bidi-font-family:"Times New Roman"'> resumes execution.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>Step</span></b><span
+style='mso-bidi-font-family:"Times New Roman"'> resumes execution until the
+next <span class=SpellE>Lua</span> source line.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>Step Over </span></b><span
+style='mso-bidi-font-family:"Times New Roman"'>resumes execution until the next
+<span class=SpellE>Lua</span> source line at the same call-stack level; useful
+for stepping over function calls.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>Step Up</span></b><span
+style='mso-bidi-font-family:"Times New Roman"'> resumes execution until the
+next <span class=SpellE>Lua</span> source line at <span class=SpellE><span
+class=GramE>a</span></span> earlier call-stack level, typically the caller of
+this function.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='mso-bidi-font-family:"Times New Roman"'>Stop</span></b><span
+style='mso-bidi-font-family:"Times New Roman"'> terminates execution by raising
+a distinguished error.<o:p></o:p></span></p>
+
+<h2><a name="_Ref276470068"></a><a name="_Setting_Breakpoints"></a><span
+style='mso-bookmark:_Ref276470068'>Setting Breakpoints</span></h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>There
+are two ways of setting breakpoints:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpFirst style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l5 level1 lfo13'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>1.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Click
+<b style='mso-bidi-font-weight:normal'>Breaks</b> and enter one or more source
+files and line numbers.<span style='mso-spacerun:yes'>&nbsp; </span>Optionally
+enter a conditional expression that will be evaluated in the context of the
+breakpoint—if it evaluates to true, the break will be taken. Breaks are
+remembered in the plugin preferences.<o:p></o:p></span></p>
+
+<p class=MsoListParagraphCxSpMiddle style='margin-left:.25in;mso-add-space:
+auto'><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoListParagraphCxSpLast style='margin-left:.25in;mso-add-space:auto;
+text-indent:-.25in;mso-list:l5 level1 lfo13'><![if !supportLists]><span
+style='mso-fareast-font-family:"Times New Roman";mso-bidi-font-family:"Times New Roman"'><span
+style='mso-list:Ignore'>2.<span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style='mso-bidi-font-family:"Times New Roman"'>Insert
+a call to </span><span class=SpellE><span class=Code><span style='font-size:
+11.0pt;line-height:115%'>Debug.pause</span></span></span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>()</span></span> or <span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pauseIf</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (expr)</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> in your code. The latter opens
+the debugger window only if expr evaluates to true.<o:p></o:p></span></p>
+
+<h2><a name="_Ref276470080"></a><a name="_The_Log"></a><a
+name="_Setting_the_Source"></a><span style='mso-bookmark:_Ref276470080'>Setting
+the Source Path</span></h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>Debug
+looks for source files in the plugin's directory </span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>(_<span class=SpellE>PLUGIN.path</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>). If you use </span><a
+href="#_Using_Require.lua"><span class=SpellE><span style='font-size:11.0pt;
+line-height:115%;font-family:"Courier New"'>Require.path</span></span></a><span
+style='mso-bidi-font-family:"Times New Roman"'> to load files from other directories,
+Debug will use the same search path to locate the sources.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>If you
+have your own module-loading scheme, you can explicitly give Debug a search
+path:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.path</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (<span class=GramE>&quot;..</span>/common&quot;,
+&quot;../base&quot;)<o:p></o:p></span></span></p>
+
+<h2><a name="_Ref276470083"></a><a name="_Other_Debug_facilities"></a><span
+style='mso-bookmark:_Ref276470083'>Other Debug facilities</span></h2>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'>See </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.lua</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> for complete documentation.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span class=Code><i style='mso-bidi-font-style:
+normal'><span style='font-size:11.0pt;line-height:115%'>Debug.pp</span></i></span></span><span
+class=Code><i style='mso-bidi-font-style:normal'><span style='font-size:11.0pt;
+line-height:115%'><o:p></o:p></span></i></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pp</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> is a pretty printer that
+formats any <span class=SpellE>Lua</span> value as a string suitable for
+logging or display.<span style='mso-spacerun:yes'>&nbsp; </span></span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pp</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> shows the contents of tables properly
+indented, showing each nested table at most once, even circular tables.<span
+style='mso-spacerun:yes'>&nbsp;&nbsp; </span>The debugger uses </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pp</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> for displaying values.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span class=Code><i style='mso-bidi-font-style:normal'><span
+style='font-size:11.0pt;line-height:115%'>Debug.log<o:p></o:p></span></i></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>Debug.log</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> is an </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>LrLogger</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'> that writes to </span><span
+class=Code><i style='mso-bidi-font-style:normal'><span style='font-size:11.0pt;
+line-height:115%'>plugin-directory</span></i></span><span class=Code><span
+style='font-size:11.0pt;line-height:115%'>/debug.log</span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>. It only creates the file if
+the plugin <span class=GramE>actually outputs</span> something.<span
+style='mso-spacerun:yes'>&nbsp; </span>To log one or more values on a single
+line, converted to strings and separated by spaces:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.logn</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (&quot;n&quot;, n,
+&quot;<span class=SpellE>i</span> &gt; n&quot;, <span class=SpellE>i</span>
+&gt; n)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='text-indent:.5in'><span style='mso-bidi-font-family:
+"Times New Roman"'>To log a formatted string:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=SpellE><span
+class=GramE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.log:tracef</span></span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (&quot;%d items are
+stale&quot;, n)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-bidi-font-family:
+"Times New Roman"'>To log one or more values pretty-printed with </span><span
+class=SpellE><span class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.pp</span></span></span><span
+style='mso-bidi-font-family:"Times New Roman"'>:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.lognpp</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (table1, array1)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span class=SpellE><span class=Code><i style='mso-bidi-font-style:
+normal'><span style='font-size:11.0pt;line-height:115%'>Debug.profileFunc</span></i></span></span><span
+class=Code><i style='mso-bidi-font-style:normal'><span style='font-size:11.0pt;
+line-height:115%'><o:p></o:p></span></i></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-bidi-font-family:
+"Times New Roman"'>You can measure the total number of calls and elapsed time
+per call of a function using the Debug profiler:<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>myFunc</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> = <span
+class=SpellE>Debug.profileFunc</span> (<span class=SpellE>myFunc</span>, &quot;<span
+class=SpellE>myFunc</span>&quot;)<o:p></o:p></span></span></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><i style='mso-bidi-font-style:
+normal'><span style='mso-bidi-font-family:"Times New Roman"'>...execute code
+that calls <span class=SpellE>myFunc</span> one or more times...<o:p></o:p></span></i></p>
+
+<p class=MsoNormal style='margin-left:1.0in'><span class=SpellE><span
+class=Code><span style='font-size:11.0pt;line-height:115%'>Debug.logn</span></span></span><span
+class=Code><span style='font-size:11.0pt;line-height:115%'> (&quot;\n&quot;, <span
+class=SpellE>Debug.profileResults</span>())<o:p></o:p></span></span></p>
+
+<p class=MsoNormal><span style='mso-bidi-font-family:"Times New Roman"'><span
+style='mso-spacerun:yes'>&nbsp;&nbsp;&nbsp; </span><o:p></o:p></span></p>
+
+<p class=MsoNormal style='margin-left:.5in'><span style='mso-bidi-font-family:
+"Times New Roman"'>The profiler properly handles recursive calls to functions.<o:p></o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
