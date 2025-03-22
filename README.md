@@ -13,7 +13,7 @@ The **LR Image Rater Plugin** for Adobe Lightroom Classic helps you rate your im
 ## Installation
 
 1. **Download the Plugin**  
-   Clone or download this repository to your computer.
+   Clone or download this repository to your computer.  There should be a green Code button at the top of the github page, click that, then click Download Zip, it will zip up these plugin files and you can download the .zip file to your computer. Extract the .zip to the folder of your choice and then install the plugin per the instructions below.
 
 2. **Install the Plugin**  
    - Open Lightroom Classic.
@@ -37,20 +37,33 @@ The **LR Image Rater Plugin** for Adobe Lightroom Classic helps you rate your im
 3. **Rate Images**  
    - The plugin will display two images at a time.
    - Choose the image you prefer or reject one to remove it from further comparisons.
+   - Optionally you may Reject an image, it will be removed from comparissions, and will be flagged as Rejected.
+   - If you made a mistake, there is an Undo button.
    - Continue until all comparisons are complete.
 
 4. **Apply Ratings**  
    Once all comparisons are done, the plugin will calculate ratings for your images and apply them to your Lightroom catalog.
 
+5. **Optional Setting"
+   The window size of the comparission can be controlled by going to `Library > Plugin Extras > LR Image Rater > Settings`.
+   The default setting is 1600 x 1000, however you can make that larger or smaller if you desire.
+
+
 ---
 
 ## Requirements
 - Adobe Lightroom Classic
-- Lightroom SDK version 3.0 or higher
-
 ---
 
 ## Support
-For more information or to report issues, visit the [GitHub repository](https://github.com/radialmonster/lr-image-rater).
+To report issues or suggest improvements, visit the Github Issue page [https://github.com/radialmonster/lr-image-rater/issues](https://github.com/radialmonster/lr-image-rater/issues).
+---
+
+## Donation
+
+If you find this plugin useful and would like to buy me lunch you may send a donation to my PayPal at [https://paypal.me/radialmonster](https://paypal.me/radialmonster)
+---
+
+## Thank you!
 
 Happy rating!
