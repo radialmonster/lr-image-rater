@@ -8,6 +8,7 @@ local LrView = import 'LrView'
 local LrTasks = import 'LrTasks'
 local LrFunctionContext = import 'LrFunctionContext'
 local LrPrefs = import 'LrPrefs'
+local LrColor = import 'LrColor'
 local catalog = import 'LrApplication'.activeCatalog()
 
 -- Initialize preferences with default values
@@ -219,6 +220,10 @@ local startComparison = Debug.showErrors(function()
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
                                     margin = 5,
+                                    width = prefs.photoWidth,
+                                    height = prefs.photoHeight,
+                                    selection_behavior = "preferences",
+                                    background_color = LrColor(0.2, 0.2, 0.2),
                                 },
                             },
                             f:view {
@@ -230,6 +235,10 @@ local startComparison = Debug.showErrors(function()
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
                                     margin = 5,
+                                    width = prefs.photoWidth,
+                                    height = prefs.photoHeight,
+                                    selection_behavior = "preferences",
+                                    background_color = LrColor(0.2, 0.2, 0.2),
                                 },
                             },
                         },
