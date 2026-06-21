@@ -63,11 +63,22 @@ local getHostScreenSize = function()
     return screenW, screenH
 end
 
--- When auto-fit is enabled, derive the window and photo-box sizes from the host
--- screen so the photos fill (most of) it. catalog_photo can't auto-resize and the
--- dialog sizes itself to its contents, so sizing the photo boxes is what makes the
--- window open large. Uses the same window->photo formula as the Settings dialog.
+-- Effective photo-box sizes for the current run. These drive how large the compare
+-- window opens (catalog_photo can't auto-resize, and the dialog sizes itself to its
+-- contents). Seeded from the saved manual prefs and optionally replaced by the
+-- screen-derived auto-fit sizes -- WITHOUT writing back to prefs, so the user's saved
+-- manual Window Width/Height survive an auto-fit run.
+local effPhotoWidth  = prefs.photoWidth
+local effPhotoHeight = prefs.photoHeight
+
+-- When auto-fit is enabled, derive the photo-box sizes from the host screen so the
+-- photos fill (most of) it. Uses the same window->photo formula as the Settings
+-- dialog, but keeps the result in locals instead of clobbering the persisted prefs.
 local applyAutoSize = Debug.showErrors(function()
+    -- Default to the user's saved manual sizes.
+    effPhotoWidth  = prefs.photoWidth
+    effPhotoHeight = prefs.photoHeight
+
     if not prefs.autoSizeToScreen then return end
 
     local screenW, screenH = getHostScreenSize()
@@ -75,10 +86,8 @@ local applyAutoSize = Debug.showErrors(function()
 
     local windowW = math.floor(screenW * 0.92)
     local windowH = math.floor(screenH * 0.88)
-    prefs.windowWidth  = windowW
-    prefs.windowHeight = windowH
-    prefs.photoWidth   = math.max(300, math.floor((windowW - 40) / 2))
-    prefs.photoHeight  = math.max(300, math.floor(windowH - 120))
+    effPhotoWidth  = math.max(300, math.floor((windowW - 40) / 2))
+    effPhotoHeight = math.max(300, math.floor(windowH - 120))
 end)
 
 local photos = {}
@@ -358,6 +367,7 @@ local startComparison = Debug.showErrors(function()
                                 -- Re-showing the current view toggles the display off.
                                 LrApplicationView.showSecondaryView(
                                     LrApplicationView.getSecondaryViewName() or "loupe")
+                                secondaryShowing = nil  -- nothing is shown while off
                                 props.powerLabel = "2nd Display: Off"
                             else
                                 local side = secondaryShowing or 'left'
@@ -375,7 +385,9 @@ local startComparison = Debug.showErrors(function()
                 -- Side button: switch which photo of the pair is shown (turns the
                 -- display on if it happens to be off).
                 local toggleSide = Debug.showErrors(function()
-                    local newSide = (secondaryShowing == 'left') and 'right' or 'left'
+                    -- Default to 'right' when nothing is shown yet (nil), since the
+                    -- label seeds to "Left"; only flip back to 'left' when already 'right'.
+                    local newSide = (secondaryShowing == 'right') and 'left' or 'right'
                     sendToSecondaryDisplay(newSide == 'right' and rightPhoto or leftPhoto, newSide)
                     setSideLabel(newSide)
                     props.powerLabel = "2nd Display: On"
@@ -393,8 +405,8 @@ local startComparison = Debug.showErrors(function()
                     -- Size the viewport a bit larger than the photo content (two
                     -- photo boxes + margins/buttons) so it fully contains it and
                     -- never shows scrollbars, while the color fills the whole area.
-                    width = (prefs.photoWidth * 2) + 100,
-                    height = prefs.photoHeight + 180,
+                    width = (effPhotoWidth * 2) + 100,
+                    height = effPhotoHeight + 180,
                     background_color = LrColor(0.2, 0.2, 0.2),
                     f:column {
                         spacing = f:control_spacing(),
@@ -416,8 +428,8 @@ local startComparison = Debug.showErrors(function()
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
                                     margin = 5,
-                                    width = prefs.photoWidth,
-                                    height = prefs.photoHeight,
+                                    width = effPhotoWidth,
+                                    height = effPhotoHeight,
                                     selection_behavior = "preferences",
                                     background_color = LrColor(0.2, 0.2, 0.2),
                                     -- Click a photo to push it to the 2nd display.
@@ -437,8 +449,8 @@ local startComparison = Debug.showErrors(function()
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
                                     margin = 5,
-                                    width = prefs.photoWidth,
-                                    height = prefs.photoHeight,
+                                    width = effPhotoWidth,
+                                    height = effPhotoHeight,
                                     selection_behavior = "preferences",
                                     background_color = LrColor(0.2, 0.2, 0.2),
                                     mouse_down = Debug.showErrors(function()
