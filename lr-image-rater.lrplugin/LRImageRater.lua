@@ -9,6 +9,7 @@ local LrTasks = import 'LrTasks'
 local LrFunctionContext = import 'LrFunctionContext'
 local LrPrefs = import 'LrPrefs'
 local LrColor = import 'LrColor'
+local LrSystemInfo = import 'LrSystemInfo'
 local catalog = import 'LrApplication'.activeCatalog()
 
 -- Initialize preferences with default values
@@ -17,12 +18,64 @@ if not prefs.windowWidth then prefs.windowWidth = 1600 end
 if not prefs.windowHeight then prefs.windowHeight = 1000 end
 if not prefs.photoWidth then prefs.photoWidth = 780 end
 if not prefs.photoHeight then prefs.photoHeight = 880 end
+if prefs.autoSizeToScreen == nil then prefs.autoSizeToScreen = true end
 
 local calculateElo = Debug.showErrors(function(winnerRating, loserRating, k)
     local expectedWin = 1 / (1 + 10 ^ ((loserRating - winnerRating) / 400))
     winnerRating = winnerRating + k * (1 - expectedWin)
     loserRating = loserRating + k * (0 - expectedWin)
     return winnerRating, loserRating
+end)
+
+-- Report the pixel size of the screen currently hosting Lightroom, so the compare
+-- window can open large enough to nearly fill it. Prefers the monitor Lightroom is
+-- on (displayInfo); falls back to the Lightroom window size; returns nil on failure.
+local getHostScreenSize = function()
+    local screenW, screenH
+
+    local ok, displays = Debug.pcall(function() return LrSystemInfo.displayInfo() end)
+    if ok and type(displays) == "table" then
+        local chosen
+        for _, d in ipairs(displays) do
+            if d.hasAppMain then chosen = d; break end
+        end
+        if not chosen then
+            for _, d in ipairs(displays) do
+                if d.isMain then chosen = d; break end
+            end
+        end
+        chosen = chosen or displays[1]
+        if chosen and tonumber(chosen.width) and tonumber(chosen.height) then
+            screenW, screenH = chosen.width, chosen.height
+        end
+    end
+
+    if not (screenW and screenH) then
+        local ok2, w, h = Debug.pcall(function() return LrSystemInfo.appWindowSize() end)
+        if ok2 and tonumber(w) and tonumber(h) then
+            screenW, screenH = w, h
+        end
+    end
+
+    return screenW, screenH
+end
+
+-- When auto-fit is enabled, derive the window and photo-box sizes from the host
+-- screen so the photos fill (most of) it. catalog_photo can't auto-resize and the
+-- modal sizes itself to its contents, so sizing the photo boxes is what makes the
+-- window open large. Uses the same window->photo formula as the Settings dialog.
+local applyAutoSize = Debug.showErrors(function()
+    if not prefs.autoSizeToScreen then return end
+
+    local screenW, screenH = getHostScreenSize()
+    if not (screenW and screenH) then return end  -- keep the manual sizes on failure
+
+    local windowW = math.floor(screenW * 0.92)
+    local windowH = math.floor(screenH * 0.88)
+    prefs.windowWidth  = windowW
+    prefs.windowHeight = windowH
+    prefs.photoWidth   = math.max(300, math.floor((windowW - 40) / 2))
+    prefs.photoHeight  = math.max(300, math.floor(windowH - 120))
 end)
 
 local photos = {}
@@ -37,38 +90,40 @@ local completedComparisonCount = 0
 local remainingComparisonCount = 0
 
 local undoStack = {}  -- Stack to store previous states
+local decisions = {}  -- Ordered history of {winner, loser} choices, used to recompute ratings
 
 local isRejected = Debug.showErrors(function(photo)
     return rejectedImages[photo.localIdentifier] == true
 end)
 
-local recalculateComparisons = Debug.showErrors(function()
-    local activePhotos = {}
-    for _, photo in ipairs(photos) do
-        if not isRejected(photo) then
-            table.insert(activePhotos, photo)
-        end
-    end
-
-    comparisons = {}
-    for i = 1, #activePhotos - 1 do
-        for j = i + 1, #activePhotos do
-            table.insert(comparisons, {activePhotos[i], activePhotos[j]})
-        end
-    end
-
-    totalComparisons = #comparisons
-    currentComparison = 0
-end)
-
 local updateComparisonCounts = Debug.showErrors(function()
+    -- Count comparisons still ahead of the one currently shown (exclude the current one).
     remainingComparisonCount = 0
-    for i = currentComparison, totalComparisons do
+    for i = currentComparison + 1, totalComparisons do
         local pair = comparisons[i]
         if pair and not (isRejected(pair[1]) or isRejected(pair[2])) then
             remainingComparisonCount = remainingComparisonCount + 1
         end
     end
+end)
+
+-- Recompute Elo ratings from scratch over the recorded decisions, skipping any
+-- decision that involves a rejected photo. This prevents rejected images from
+-- leaving "ghost" rating shifts on the surviving images.
+local recomputeRatings = Debug.showErrors(function()
+    local result = {}
+    for _, photo in ipairs(photos) do
+        if not isRejected(photo) then
+            result[photo.localIdentifier] = 1500
+        end
+    end
+    for _, decision in ipairs(decisions) do
+        if result[decision.winner] and result[decision.loser] then
+            result[decision.winner], result[decision.loser] =
+                calculateElo(result[decision.winner], result[decision.loser], 32)
+        end
+    end
+    return result
 end)
 
 local applyRatingsToPhotos = Debug.showErrors(function(allImages)
@@ -107,6 +162,7 @@ local showNextComparison
 local pushUndoState = Debug.showErrors(function(leftPhoto, rightPhoto, action)
     table.insert(undoStack, {
         currentComparison = currentComparison,
+        completedComparisonCount = completedComparisonCount,
         leftPhoto = leftPhoto,
         rightPhoto = rightPhoto,
         leftRating = ratings[leftPhoto.localIdentifier],
@@ -125,11 +181,15 @@ local undoLastAction = Debug.showErrors(function()
 
     local lastState = table.remove(undoStack)
     currentComparison = lastState.currentComparison - 1 -- Go back one comparison
-    
+    -- Roll back the counter so the re-shown comparison keeps its original number
+    -- (showNextComparison will increment it again when it re-renders).
+    completedComparisonCount = lastState.completedComparisonCount - 1
+
     -- Restore previous ratings and reject states
     if lastState.action == "rating" then
         ratings[lastState.leftPhoto.localIdentifier] = lastState.leftRating
         ratings[lastState.rightPhoto.localIdentifier] = lastState.rightRating
+        table.remove(decisions)  -- Discard the decision recorded for this comparison
     elseif lastState.action == "reject" then
         rejectedImages[lastState.leftPhoto.localIdentifier] = lastState.leftRejected
         rejectedImages[lastState.rightPhoto.localIdentifier] = lastState.rightRejected
@@ -149,14 +209,19 @@ local startComparison = Debug.showErrors(function()
         return
     end
 
+    -- Size the compare window/photos to fill the screen (if auto-fit is enabled).
+    applyAutoSize()
+
     -- Initialize ratings
     ratings = {}
     for _, photo in ipairs(photos) do
         ratings[photo.localIdentifier] = 1500
     end
 
-    -- Clear rejected images
+    -- Clear rejected images and decision history
     rejectedImages = {}
+    decisions = {}
+    undoStack = {}
 
     -- Initialize comparisons
     comparisons = {}
@@ -173,17 +238,6 @@ local startComparison = Debug.showErrors(function()
 
     local f = LrView.osFactory()
 
-    local remainingSkippedComparisons = Debug.showErrors(function()
-        local skipped = 0
-        for i = 1, totalComparisons do
-            local pair = comparisons[i]
-            if pair and (isRejected(pair[1]) or isRejected(pair[2])) then
-                skipped = skipped + 1
-            end
-        end
-        return skipped
-    end)
-
     -- Initialize showNextComparison functionality
     showNextComparison = Debug.showErrors(function()
         currentComparison = currentComparison + 1
@@ -197,9 +251,16 @@ local startComparison = Debug.showErrors(function()
                 updateComparisonCounts()
                 
                 local c
-                c = f:view {
+                -- scrolled_view is one of the only containers that accepts a
+                -- background_color, so it's used here purely to tint the popup's
+                -- content area. Sized to the window so the content fits without
+                -- scrollbars and the color fills the whole area.
+                c = f:scrolled_view {
                     fill_horizontal = 1,
                     fill_vertical = 1,
+                    width = prefs.windowWidth,
+                    height = prefs.windowHeight,
+                    background_color = LrColor(0.2, 0.2, 0.2),
                     f:column {
                         spacing = f:control_spacing(),
                         fill_horizontal = 1,
@@ -252,6 +313,7 @@ local startComparison = Debug.showErrors(function()
                                     LrDialogs.showBezel("Left is Better")
                                     local winner, loser = leftPhoto.localIdentifier, rightPhoto.localIdentifier
                                     ratings[winner], ratings[loser] = calculateElo(ratings[winner], ratings[loser], 32)
+                                    table.insert(decisions, {winner = winner, loser = loser})
                                     LrDialogs.stopModalWithResult(c, 'ok')
                                     LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
                                 end)
@@ -294,6 +356,7 @@ local startComparison = Debug.showErrors(function()
                                     LrDialogs.showBezel("Right is Better")
                                     local winner, loser = rightPhoto.localIdentifier, leftPhoto.localIdentifier
                                     ratings[winner], ratings[loser] = calculateElo(ratings[winner], ratings[loser], 32)
+                                    table.insert(decisions, {winner = winner, loser = loser})
                                     LrDialogs.stopModalWithResult(c, 'ok')
                                     LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
                                 end)
@@ -314,7 +377,7 @@ local startComparison = Debug.showErrors(function()
                     }
                 }
 
-                LrDialogs.presentModalDialog {
+                local dialogResult = LrDialogs.presentModalDialog {
                     title = "LR Image Rater - Compare",
                     contents = c,
                     resizable = true,
@@ -322,11 +385,22 @@ local startComparison = Debug.showErrors(function()
                     height = prefs.windowHeight
                 }
 
+                -- A button handler dismisses the dialog with 'ok' and queues the
+                -- next comparison itself. Any other result means the user closed
+                -- the window (Esc / close box), so stop without applying ratings.
+                if dialogResult ~= 'ok' then
+                    LrDialogs.showBezel("Rating cancelled")
+                end
+
                 return
             end
 
             currentComparison = currentComparison + 1
         end
+
+        -- Authoritative final ratings: recompute from the decision history so that
+        -- any photos rejected mid-session leave no residual effect on the survivors.
+        ratings = recomputeRatings()
 
         local sortedRatings = {}
         for id, rating in pairs(ratings) do
