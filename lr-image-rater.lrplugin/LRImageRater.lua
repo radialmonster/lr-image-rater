@@ -258,8 +258,11 @@ local startComparison = Debug.showErrors(function()
                 c = f:scrolled_view {
                     fill_horizontal = 1,
                     fill_vertical = 1,
-                    width = prefs.windowWidth,
-                    height = prefs.windowHeight,
+                    -- Size the viewport a bit larger than the photo content (two
+                    -- photo boxes + margins/buttons) so it fully contains it and
+                    -- never shows scrollbars, while the color fills the whole area.
+                    width = (prefs.photoWidth * 2) + 100,
+                    height = prefs.photoHeight + 180,
                     background_color = LrColor(0.2, 0.2, 0.2),
                     f:column {
                         spacing = f:control_spacing(),
