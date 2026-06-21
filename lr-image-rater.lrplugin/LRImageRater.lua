@@ -373,7 +373,9 @@ local startComparison = Debug.showErrors(function()
                             f:static_text {
                                 title = string.format("Comparison %d - Remaining: %d", completedComparisonCount, remainingComparisonCount),
                                 alignment = 'center',
-                                width = 400, -- Set fixed width for better centering
+                                font = { name = "<system/bold>", size = 18 },  -- bold + larger than the button text
+                                text_color = LrColor(1, 1, 1),  -- white, readable on the dark popup
+                                width = 500, -- fixed width for centering (wider for larger text)
                             },
                             f:spacer { fill_horizontal = 1 },
                         },
