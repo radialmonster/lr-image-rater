@@ -5,11 +5,14 @@ require 'strict.lua'
 -- LRImageRater.lua
 local LrDialogs = import 'LrDialogs'
 local LrView = import 'LrView'
+local LrBinding = import 'LrBinding'
 local LrTasks = import 'LrTasks'
 local LrFunctionContext = import 'LrFunctionContext'
 local LrPrefs = import 'LrPrefs'
 local LrColor = import 'LrColor'
 local LrSystemInfo = import 'LrSystemInfo'
+local LrApplicationView = import 'LrApplicationView'
+local LrProgressScope = import 'LrProgressScope'
 local catalog = import 'LrApplication'.activeCatalog()
 
 -- Initialize preferences with default values
@@ -62,7 +65,7 @@ end
 
 -- When auto-fit is enabled, derive the window and photo-box sizes from the host
 -- screen so the photos fill (most of) it. catalog_photo can't auto-resize and the
--- modal sizes itself to its contents, so sizing the photo boxes is what makes the
+-- dialog sizes itself to its contents, so sizing the photo boxes is what makes the
 -- window open large. Uses the same window->photo formula as the Settings dialog.
 local applyAutoSize = Debug.showErrors(function()
     if not prefs.autoSizeToScreen then return end
@@ -79,13 +82,15 @@ local applyAutoSize = Debug.showErrors(function()
 end)
 
 local photos = {}
+local photosById = {}  -- localIdentifier -> LrPhoto, built once per session for O(1) lookups
+local originalSelection = nil  -- selection to restore after we hijack it for the 2nd display
+local secondaryShowing = nil   -- 'left' / 'right': which photo is currently pushed to the 2nd display
 local comparisons = {}
 local totalComparisons = 0
 local currentComparison = 0
 local rejectedImages = {}
 local ratings = {}
 
-local validComparisonCount = 0
 local completedComparisonCount = 0
 local remainingComparisonCount = 0
 
@@ -94,6 +99,48 @@ local decisions = {}  -- Ordered history of {winner, loser} choices, used to rec
 
 local isRejected = Debug.showErrors(function(photo)
     return rejectedImages[photo.localIdentifier] == true
+end)
+
+-- Push one photo of the current pair to Lightroom's secondary display (a separate
+-- window even when there's only one monitor). The normal loupe shows the catalog's
+-- active photo, so we select the photo first, then make sure the loupe is showing.
+-- Wrapped in pcall + an async task so it never disturbs the rating flow if the
+-- secondary display is unavailable or blocked.
+local sendToSecondaryDisplay = Debug.showErrors(function(photo, side)
+    -- Record the intended side synchronously so callers that decide the *next*
+    -- side from secondaryShowing (e.g. toggleSide) see the up-to-date value even
+    -- before the async repaint below has finished. Updating it only inside the
+    -- async task caused rapid presses to read a stale side and fail to alternate.
+    secondaryShowing = side
+    LrTasks.startAsyncTask(Debug.showErrors(function()
+        Debug.pcall(function()
+            -- The compare window is a *floating* (non-modal) dialog, so Lightroom's
+            -- main UI keeps running and the secondary normal loupe ("loupe") -- which
+            -- shows the catalog's active photo -- repaints on its own as soon as we
+            -- change the selection. (NOT "live_loupe": that's the secondary Loupe's
+            -- "Live" mode, which follows the mouse hover and ignores the selection, so
+            -- setSelectedPhotos had no effect on it.)
+            catalog:setSelectedPhotos(photo, { photo })
+            -- Make sure the secondary display is on and showing the normal loupe.
+            -- getSecondaryViewName() returns nil when the display is off and the
+            -- current view's name when on, so this turns it on / switches it to the
+            -- loupe only when it isn't already there (never hides it).
+            if LrApplicationView.getSecondaryViewName() ~= "loupe" then
+                LrApplicationView.showSecondaryView("loupe")
+            end
+        end)
+    end))
+end)
+
+-- Put the catalog selection back the way the user had it before we started
+-- hijacking the active photo for the 2nd-display preview.
+local restoreSelection = Debug.showErrors(function()
+    if not originalSelection or #originalSelection == 0 then return end
+    LrTasks.startAsyncTask(Debug.showErrors(function()
+        Debug.pcall(function()
+            catalog:setSelectedPhotos(originalSelection[1], originalSelection)
+        end)
+    end))
 end)
 
 local updateComparisonCounts = Debug.showErrors(function()
@@ -128,27 +175,38 @@ end)
 
 local applyRatingsToPhotos = Debug.showErrors(function(allImages)
     local catalog = import 'LrApplication'.activeCatalog()
-    
+
     Debug.callWithContext("Apply Ratings Context", Debug.showErrors(function(context)
+        -- Progress UI so a large batch doesn't look like a frozen Lightroom.
+        local progress = LrProgressScope {
+            title = "Applying ratings and reject flags",
+            functionContext = context,
+        }
+        progress:setCancelable(false)
+        local total = #allImages
+
         local success, err = Debug.pcall(Debug.showErrors(function()
             catalog:withWriteAccessDo("Apply Ratings", Debug.showErrors(function()
-                for _, data in ipairs(allImages) do
-                    for _, photo in ipairs(photos) do
-                        if photo.localIdentifier == data.id then
-                            if data.rating == "Rejected" then
-                                photo:setRawMetadata('rating', nil)  -- Clear any existing rating
-                                photo:setRawMetadata('pickStatus', -1)  -- Set as rejected
-                            else
-                                photo:setRawMetadata('pickStatus', 0)  -- Clear rejected status
-                                photo:setRawMetadata('rating', data.rating) --Set the rating
-                            end
-                            break
+                for i, data in ipairs(allImages) do
+                    -- O(1) lookup instead of scanning all photos for every image.
+                    local photo = photosById[data.id]
+                    if photo then
+                        if data.rating == "Rejected" then
+                            photo:setRawMetadata('rating', nil)  -- Clear any existing rating
+                            photo:setRawMetadata('pickStatus', -1)  -- Set as rejected
+                        else
+                            photo:setRawMetadata('pickStatus', 0)  -- Clear rejected status
+                            photo:setRawMetadata('rating', data.rating) --Set the rating
                         end
                     end
+                    progress:setPortionComplete(i, total)
+                    LrTasks.yield()  -- let the progress bar repaint
                 end
             end))
         end))
-        
+
+        progress:done()
+
         if success then
             LrDialogs.showBezel("Ratings and reject flags applied successfully")
         else
@@ -173,16 +231,23 @@ local pushUndoState = Debug.showErrors(function(leftPhoto, rightPhoto, action)
     })
 end)
 
-local undoLastAction = Debug.showErrors(function()
+-- Roll state back by one decision. The comparison loop drives re-presentation, so
+-- this only adjusts state: it lands currentComparison one *before* the comparison to
+-- re-show, and the loop's own +1 brings it back to that comparison.
+local applyUndo = Debug.showErrors(function()
     if #undoStack == 0 then
         LrDialogs.showBezel("Nothing to undo")
+        -- Nothing to roll back; re-show the current comparison by cancelling the
+        -- loop's upcoming +1.
+        currentComparison = currentComparison - 1
+        completedComparisonCount = completedComparisonCount - 1
         return
     end
 
     local lastState = table.remove(undoStack)
     currentComparison = lastState.currentComparison - 1 -- Go back one comparison
     -- Roll back the counter so the re-shown comparison keeps its original number
-    -- (showNextComparison will increment it again when it re-renders).
+    -- (the loop will increment it again when it re-renders).
     completedComparisonCount = lastState.completedComparisonCount - 1
 
     -- Restore previous ratings and reject states
@@ -194,11 +259,10 @@ local undoLastAction = Debug.showErrors(function()
         rejectedImages[lastState.leftPhoto.localIdentifier] = lastState.leftRejected
         rejectedImages[lastState.rightPhoto.localIdentifier] = lastState.rightRejected
     end
-    
-    -- Update counts and reshow the comparison
+
+    -- Update counts; the loop re-shows the comparison.
     updateComparisonCounts()
     LrDialogs.showBezel("Undid last action")
-    showNextComparison()
 end)
 
 local startComparison = Debug.showErrors(function()
@@ -208,6 +272,17 @@ local startComparison = Debug.showErrors(function()
         LrDialogs.message("Select at least two images to compare.")
         return
     end
+
+    -- Index photos by id once so apply/results don't rescan the list per image.
+    photosById = {}
+    for _, photo in ipairs(photos) do
+        photosById[photo.localIdentifier] = photo
+    end
+
+    -- Remember the user's selection so we can restore it after using the active
+    -- photo to drive the 2nd-display preview.
+    originalSelection = photos
+    secondaryShowing = nil
 
     -- Size the compare window/photos to fill the screen (if auto-fit is enabled).
     applyAutoSize()
@@ -238,18 +313,74 @@ local startComparison = Debug.showErrors(function()
 
     local f = LrView.osFactory()
 
-    -- Initialize showNextComparison functionality
-    showNextComparison = Debug.showErrors(function()
-        currentComparison = currentComparison + 1
+    -- Present one comparison as a *floating* (non-modal) dialog and block this task
+    -- until the user chooses. Floating (not modal) is what makes the 2nd display
+    -- update reliably -- Lightroom's main UI keeps running, so changing the selection
+    -- repaints the secondary loupe on its own. Returns 'next' (a rating/reject was
+    -- made), 'undo', or 'cancel' (the user closed the window).
+    local presentOneComparison = Debug.showErrors(function(leftPhoto, rightPhoto)
+        local outcome = 'cancel'  -- default if the window is closed (Esc / close box)
+        local closeDialog
 
-        while currentComparison <= totalComparisons do
-            local pair = comparisons[currentComparison]
-            local leftPhoto, rightPhoto = pair[1], pair[2]
+        LrFunctionContext.callWithContext("compareDialog", Debug.showErrors(function(dialogContext)
+                local props = LrBinding.makePropertyTable(dialogContext)
 
-            if not isRejected(leftPhoto) and not isRejected(rightPhoto) then
-                completedComparisonCount = completedComparisonCount + 1
-                updateComparisonCounts()
-                
+                -- Reflect the current side in the side button's label.
+                local setSideLabel = function(side)
+                    props.sideLabel = (side == 'right') and "Showing: Right" or "Showing: Left"
+                end
+
+                -- Seed the two button labels from the live 2nd-display state.
+                local displayOn = false
+                Debug.pcall(function() displayOn = LrApplicationView.isSecondaryDisplayOn() end)
+                props.powerLabel = displayOn and "2nd Display: On" or "2nd Display: Off"
+                setSideLabel(secondaryShowing or 'left')
+
+                -- If the 2nd display is already on from the previous comparison,
+                -- refresh it to this pair's left photo so it isn't showing a stale one.
+                if displayOn then
+                    sendToSecondaryDisplay(leftPhoto, 'left')
+                    setSideLabel('left')
+                end
+
+                -- Dismiss the floating dialog, recording why it closed so the
+                -- comparison loop knows what to do next.
+                local finish = function(reason)
+                    outcome = reason
+                    if closeDialog then closeDialog() end
+                end
+
+                -- Power button: turn the 2nd-display loupe on or off.
+                local togglePower = Debug.showErrors(function()
+                    LrTasks.startAsyncTask(Debug.showErrors(function()
+                        Debug.pcall(function()
+                            if LrApplicationView.isSecondaryDisplayOn() then
+                                -- Re-showing the current view toggles the display off.
+                                LrApplicationView.showSecondaryView(
+                                    LrApplicationView.getSecondaryViewName() or "loupe")
+                                props.powerLabel = "2nd Display: Off"
+                            else
+                                local side = secondaryShowing or 'left'
+                                local photo = (side == 'right') and rightPhoto or leftPhoto
+                                catalog:setSelectedPhotos(photo, { photo })
+                                LrApplicationView.showSecondaryView("loupe")
+                                secondaryShowing = side
+                                props.powerLabel = "2nd Display: On"
+                                setSideLabel(side)
+                            end
+                        end)
+                    end))
+                end)
+
+                -- Side button: switch which photo of the pair is shown (turns the
+                -- display on if it happens to be off).
+                local toggleSide = Debug.showErrors(function()
+                    local newSide = (secondaryShowing == 'left') and 'right' or 'left'
+                    sendToSecondaryDisplay(newSide == 'right' and rightPhoto or leftPhoto, newSide)
+                    setSideLabel(newSide)
+                    props.powerLabel = "2nd Display: On"
+                end)
+
                 local c
                 -- scrolled_view is one of the only containers that accepts a
                 -- background_color, so it's used here purely to tint the popup's
@@ -258,6 +389,7 @@ local startComparison = Debug.showErrors(function()
                 c = f:scrolled_view {
                     fill_horizontal = 1,
                     fill_vertical = 1,
+                    bind_to_object = props,
                     -- Size the viewport a bit larger than the photo content (two
                     -- photo boxes + margins/buttons) so it fully contains it and
                     -- never shows scrollbars, while the color fills the whole area.
@@ -279,7 +411,7 @@ local startComparison = Debug.showErrors(function()
                                 fill_horizontal = 1,
                                 fill_vertical = 1,
                                 margin = 5,
-                                f:catalog_photo { 
+                                f:catalog_photo {
                                     photo = leftPhoto,
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
@@ -288,13 +420,19 @@ local startComparison = Debug.showErrors(function()
                                     height = prefs.photoHeight,
                                     selection_behavior = "preferences",
                                     background_color = LrColor(0.2, 0.2, 0.2),
+                                    -- Click a photo to push it to the 2nd display.
+                                    mouse_down = Debug.showErrors(function()
+                                        sendToSecondaryDisplay(leftPhoto, 'left')
+                                        setSideLabel('left')
+                                        props.powerLabel = "2nd Display: On"
+                                    end),
                                 },
                             },
                             f:view {
-                                fill_horizontal = 1, 
+                                fill_horizontal = 1,
                                 fill_vertical = 1,
                                 margin = 5,
-                                f:catalog_photo { 
+                                f:catalog_photo {
                                     photo = rightPhoto,
                                     fill_horizontal = 1,
                                     fill_vertical = 1,
@@ -303,6 +441,11 @@ local startComparison = Debug.showErrors(function()
                                     height = prefs.photoHeight,
                                     selection_behavior = "preferences",
                                     background_color = LrColor(0.2, 0.2, 0.2),
+                                    mouse_down = Debug.showErrors(function()
+                                        sendToSecondaryDisplay(rightPhoto, 'right')
+                                        setSideLabel('right')
+                                        props.powerLabel = "2nd Display: On"
+                                    end),
                                 },
                             },
                         },
@@ -317,8 +460,7 @@ local startComparison = Debug.showErrors(function()
                                     local winner, loser = leftPhoto.localIdentifier, rightPhoto.localIdentifier
                                     ratings[winner], ratings[loser] = calculateElo(ratings[winner], ratings[loser], 32)
                                     table.insert(decisions, {winner = winner, loser = loser})
-                                    LrDialogs.stopModalWithResult(c, 'ok')
-                                    LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
+                                    finish('next')
                                 end)
                             },
                             f:push_button {
@@ -328,16 +470,13 @@ local startComparison = Debug.showErrors(function()
                                     rejectedImages[leftPhoto.localIdentifier] = true
                                     LrDialogs.showBezel("Reject Left")
                                     updateComparisonCounts()
-                                    
-                                    LrDialogs.stopModalWithResult(c, 'ok')
-                                    LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
+                                    finish('next')
                                 end)
                             },
                             f:push_button {
                                 title = "Undo",
                                 action = Debug.showErrors(function()
-                                    LrDialogs.stopModalWithResult(c, 'ok')
-                                    undoLastAction()
+                                    finish('undo')
                                 end)
                             },
                             f:push_button {
@@ -347,9 +486,7 @@ local startComparison = Debug.showErrors(function()
                                     rejectedImages[rightPhoto.localIdentifier] = true
                                     LrDialogs.showBezel("Reject Right")
                                     updateComparisonCounts()
-                                    
-                                    LrDialogs.stopModalWithResult(c, 'ok')
-                                    LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
+                                    finish('next')
                                 end)
                             },
                             f:push_button {
@@ -360,9 +497,26 @@ local startComparison = Debug.showErrors(function()
                                     local winner, loser = rightPhoto.localIdentifier, leftPhoto.localIdentifier
                                     ratings[winner], ratings[loser] = calculateElo(ratings[winner], ratings[loser], 32)
                                     table.insert(decisions, {winner = winner, loser = loser})
-                                    LrDialogs.stopModalWithResult(c, 'ok')
-                                    LrTasks.startAsyncTask(Debug.showErrors(showNextComparison))
+                                    finish('next')
                                 end)
+                            },
+                            f:spacer { fill_horizontal = 1 },
+                        },
+                        f:row {
+                            spacing = f:control_spacing(),
+                            fill_horizontal = 1,
+                            f:spacer { fill_horizontal = 1 },
+                            f:push_button {
+                                -- Turn the 2nd display on/off.
+                                title = LrView.bind("powerLabel"),
+                                width = 150,
+                                action = togglePower,
+                            },
+                            f:push_button {
+                                -- Switch which photo of the pair the 2nd display shows.
+                                title = LrView.bind("sideLabel"),
+                                width = 140,
+                                action = toggleSide,
                             },
                             f:spacer { fill_horizontal = 1 },
                         },
@@ -382,26 +536,48 @@ local startComparison = Debug.showErrors(function()
                     }
                 }
 
-                local dialogResult = LrDialogs.presentModalDialog {
+                LrDialogs.presentFloatingDialog(_PLUGIN, {
                     title = "LR Image Rater - Compare",
                     contents = c,
-                    resizable = true,
-                    width = prefs.windowWidth,
-                    height = prefs.windowHeight
-                }
+                    blockTask = true,  -- block this task until the dialog closes
+                    save_frame = "compareWindowPosition",
+                    onShow = Debug.showErrors(function(funcs) closeDialog = funcs.close end),
+                })
+        end))
 
-                -- A button handler dismisses the dialog with 'ok' and queues the
-                -- next comparison itself. Any other result means the user closed
-                -- the window (Esc / close box), so stop without applying ratings.
-                if dialogResult ~= 'ok' then
-                    LrDialogs.showBezel("Rating cancelled")
-                end
+        return outcome
+    end)
 
-                return
-            end
-
+    -- Drive the whole comparison sequence in a single task: present each pairing,
+    -- act on the result, and stop only on completion or when the user closes the
+    -- window. The floating dialog blocks this task while open, so there's no
+    -- per-button recursion to juggle.
+    showNextComparison = Debug.showErrors(function()
+        while true do
             currentComparison = currentComparison + 1
+            if currentComparison > totalComparisons then break end
+
+            local pair = comparisons[currentComparison]
+            local leftPhoto, rightPhoto = pair[1], pair[2]
+
+            if not isRejected(leftPhoto) and not isRejected(rightPhoto) then
+                completedComparisonCount = completedComparisonCount + 1
+                updateComparisonCounts()
+
+                local outcome = presentOneComparison(leftPhoto, rightPhoto)
+                if outcome == 'cancel' then
+                    restoreSelection()  -- put the user's selection back before leaving
+                    LrDialogs.showBezel("Rating cancelled")
+                    return
+                elseif outcome == 'undo' then
+                    applyUndo()  -- rolls currentComparison and counts back one
+                end
+            end
         end
+
+        -- All comparisons done: restore the user's original selection that we
+        -- borrowed to drive the 2nd-display preview.
+        restoreSelection()
 
         -- Authoritative final ratings: recompute from the decision history so that
         -- any photos rejected mid-session leave no residual effect on the survivors.
@@ -459,19 +635,17 @@ local startComparison = Debug.showErrors(function()
             table.insert(allImages, {id = data.id, rating = lrRating})
         end
         
-        -- Sort all images by ID (smallest to largest)
+        -- Fetch all filenames in a single batch call instead of one catalog
+        -- round-trip per image (and avoid the old O(n^2) inner scan over photos).
+        local fileNameByPhoto = catalog:batchGetFormattedMetadata(photos, { 'fileName' })
 
         -- Create the final results text
         for _, data in ipairs(allImages) do
-            local filename = nil
-            for _, photo in ipairs(photos) do
-                if photo.localIdentifier == data.id then
-                    filename = photo:getFormattedMetadata('fileName')
-                    break
-                end
-            end
-            resultText = resultText .. string.format("Filename: %s, Image ID: %s, Rating: %s\n", 
-                filename or "Unknown", data.id, data.rating)
+            local photo = photosById[data.id]
+            local meta = photo and fileNameByPhoto[photo]
+            local filename = meta and meta.fileName or "Unknown"
+            resultText = resultText .. string.format("Filename: %s, Image ID: %s, Rating: %s\n",
+                filename, data.id, data.rating)
         end
 
         LrTasks.startAsyncTask(Debug.showErrors(function()

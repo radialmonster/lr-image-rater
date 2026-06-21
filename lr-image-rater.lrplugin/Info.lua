@@ -6,8 +6,8 @@ Basic information for the LR Image Rater plugin
 ------------------------------------------------------------------------------]]
 
 return {
-	LrSdkVersion = 3.0,
-	LrSdkMinimumVersion = 2.0,
+	LrSdkVersion = 15.0,
+	LrSdkMinimumVersion = 6.0,  -- 6.0 = first version with LrApplicationView.showSecondaryView (used for the 2nd-display preview)
 	LrToolkitIdentifier = 'com.radialmonster.lightroom.lrimagerater',
 	
 	LrPluginName = "LR Image Rater",
@@ -29,5 +29,5 @@ return {
 		},
 	},
 	
-	VERSION = { major=1, minor=0, revision=0, build="20230321a" },
+	VERSION = { major=1, minor=1, revision=0, build="20260621a" },
 }
